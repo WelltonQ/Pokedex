@@ -3,14 +3,17 @@ import styled from "styled-components";
 export const HeaderContainer = styled.header`
     width: 100%;
     padding: 1.5rem;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
+    
     background: var(--red);
     color: var(--white);
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
+
+    .container {
+        max-width: 1200px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
 
     div.logoPokedex {
         display: flex;     
@@ -36,6 +39,5 @@ export const HeaderContainer = styled.header`
                 font-size: 1.5rem;
             }
         }
-    }
-    
+    }    
 `;

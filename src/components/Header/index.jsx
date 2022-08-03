@@ -12,12 +12,11 @@ import synviaIcon from "../../assets/synvia-A.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 
-// library.add(faUser);
-
 
 export function Header() {
   return (
     <HeaderContainer>
+      <div className="container">
         <div className='logoPokedex'>
           <img src={pokeball} alt="Imagem da Pokédex" />
           <h1>Pokédex</h1>
@@ -30,6 +29,7 @@ export function Header() {
             <FontAwesomeIcon icon={faArrowRightFromBracket} />
           </button>
         </div>
+      </div>
     </HeaderContainer>
   )
 }

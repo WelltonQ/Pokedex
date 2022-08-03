@@ -2,6 +2,8 @@ import styled from "styled-components";
 
 export const NavFilterHeader = styled.nav`
     width: 100%;
+    max-width: 1200px;
+    margin: 0 auto; 
     padding: 2.5rem 1.5rem;
 
     display: flex;
@@ -68,6 +70,8 @@ export const NavFilterHeader = styled.nav`
 
 export const SectionContainer = styled.section`
     width: 100%;
+    max-width: 1200px;
+    margin: 0 auto; 
     padding: 0 1.5rem;
     gap: 2rem;
     display: flex;
@@ -108,6 +112,7 @@ export const Pokemons = styled.section`
     width: 85%;
     height: 25rem;
     overflow-y: auto;
+    overflow-x: hidden;
 
     display: flex;
     flex-wrap: wrap;
@@ -131,11 +136,11 @@ export const Pokemons = styled.section`
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 1rem;
+            /* padding: 1rem; */
             border-radius: 7px;
 
             img {
-                height: 100px;
+                /* height: 100px; */
                 object-fit: cover;
             }
         }
@@ -165,15 +170,97 @@ export const Pokemons = styled.section`
                     border-radius: 8px;
                 }
 
-                span.typeGrass {
+                span.Grass {
                     color: var(--font);
                     background: var(--grass);
                 }
-                span.typePoison {
+                span.Poison {
                     color: var(--white);
                     background: var(--poison);
                 }
+                span.Fire {
+                    color: var(--white);
+                    background: var(--fire);
+                }
+                span.Normal {
+                    color: var(--font);
+                    background: var(--normal);
+                }
+                span.Water {
+                    color: var(--white);
+                    background: var(--water);
+                }
+                span.Ice {
+                    color: var(--font);
+                    background: var(--ice);
+                }
+                span.Ground {
+                    color: var(--white);
+                    background: var(--ground);
+                }
+                span.Flying {
+                    color: var(--font);
+                    background: var(--flying);
+                }
+                span.Bug {
+                    color: var(--white);
+                    background: var(--bug);
+                }
+                span.Rock {
+                    color: var(--font);
+                    background: var(--rock);
+                }
+                span.Ghost {
+                    color: var(--white);
+                    background: var(--ghost);
+                }
+                span.Dragon {
+                    color: var(--font);
+                    background: var(--dragon);
+                }
+                span.Dark {
+                    color: var(--white);
+                    background: var(--dark);
+                }
+                span.Steel {
+                    color: var(--font);
+                    background: var(--steel);
+                }
+                span.Fairy {
+                    color: var(--white);
+                    background: var(--fairy);
+                }
+                span.Psychic {
+                    color: var(--font);
+                    background: var(--psychic);
+                }
+                span.Electric {
+                    color: var(--white);
+                    background: var(--electric);
+                }
+                span.Fighting {
+                    color: var(--font);
+                    background: var(--fighting);
+                }
+                
             }
         }
+
+        svg {
+            display: none;
+            color: var(--red);
+        }              
+        
+        svg:hover {
+            cursor: pointer;
+        }
     }
+
+    .card:hover svg{
+        display: block;
+        
+        position: absolute;
+        right: 5px;
+        top: 5px;
+    }  
 `;
