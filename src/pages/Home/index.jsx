@@ -14,71 +14,113 @@ import { faHeart as faHeartSolid } from "@fortawesome/free-solid-svg-icons";
 export function Home() {
   const [pokemons, setPokemons] = useState(null);
   const [favorites, setFavorites] = useState([]);
-  const [search, setSearch] = useState('');
-  const [order, setOrder] = useState(1);
-  const [columnOrder, setColumnOrder] = useState('name');
-
+  const [searchName, setSearchName] = useState('');
+  const [order, setOrder] = useState('Menor número primeiro');
+  const [filterTypesState, setFilterTypesState] = useState([]);
+  
   useEffect(() => {
     fetch('https://unpkg.com/pokemons@1.1.0/pokemons.json')
     .then((r) => r.json())
     .then((json) => {
       setPokemons(json.results)
+    }).catch(error => {
+      console.log('error', error)
     })
-  }, [])
+  }, [])    
 
-    
+  function handleAddFavorites(name) {
+    if (favorites.map(e=>e.name).includes(name)) return;
 
-  function handleAddFavorites(numberPokemon) {
-    if (favorites.includes(numberPokemon)) return;
+    let newList = [...pokemons];
 
-    setFavorites([...favorites, numberPokemon])
+    let filterNewList = newList.filter(pokemon => (pokemon.name).includes(name))
+
+    setFavorites([...favorites, filterNewList[0]])
   }
   
-  function handleRemoveFavorites(numberPokemon) {
-    const response = favorites.filter(pokemon => pokemon !== numberPokemon)
+  function handleRemoveFavorites(name) {
+    const response = favorites.filter(pokemon => pokemon.name !== name)
     setFavorites(response)
   }
 
-  console.log(favorites)
-  // const poke = pokemons.map(pok => pok.national_number)
-  // const isFavorite = favorites.includes(poke)
-  // const isFavorite = pokemons.filter(f => { return f === favorites})
-  // console.log('poke', poke)
-  // console.log('isFavorite', isFavorite)
+  const isFavorite = favorites.some(pokemon => (pokemon.name) === (pokemons.map(poke => poke.name)))
+  console.log("🚀 ~ file: index.jsx ~ line 47 ~ Home ~ isFavorite", isFavorite)
+  // console.log("🚀 favorites.some(pokemon => (pokemon.name)", favorites.map(pokemon => (pokemon.name)))
+  // console.log("🚀 ~pokemons.map(poke => poke.name)", pokemons.map(poke => poke.name))
+
+  console.log('favorites', favorites)
+
   
+  function lower(string) {
+      return string.toLowerCase();
+  }
 
-  // if (search) {
-  //   const exp = aval(`/${search.replace(/[^\d\w]+/,'.*')}/i`)
-  //   pokemons.filter(pokemon => exp.test(pokemon.name))
-  // }
+  const uniquePokemonByNumber = new Map();
 
-  // const pokemonsFilter = useMemo(() => {
-  //   return  pokemons?.filter(pokemon => pokemon.includes(search))
-  // }, [])
+  pokemons?.forEach((pokemon) => {
+    if(!uniquePokemonByNumber.has(pokemon.national_number)) {
+      uniquePokemonByNumber.set(pokemon.national_number, pokemon)
+    }
+  })
 
-  // const lowerSearch = search.toLowerCase();
-  // const namesFiltered = pokemons.filter(pokemon => pokemon.name.toLowerCase().includes(lowerSearch));
+  const filterPokemonsNotRepeat = [...uniquePokemonByNumber.values()]
 
-  // function handleOrder(fieldName) {
-  //   setOrder(-order)
-  //   setColumnOrder(fieldName)
-  // }
+  const filterPokemons = filterPokemonsNotRepeat?.filter(pokemon => lower(pokemon.name).includes(lower(searchName)) || pokemon.national_number.includes(searchName))
 
-  // pokemons.sort((a,b) => {
-  //   return a[columnOrder] < b[columnOrder] ? -order : order
-  // })
 
-  const typePokemons = pokemons?.map(pokemon => pokemon.type.map(type => type))
-  // const types = typePokemons.map(t => t)
+  function handleOrderNumberCresClick() {
+    let newList = [...pokemons];
 
-  // console.log('types', types)
+    newList.sort((a, b) => (a.national_number > b.national_number ? 1 : b.national_number > a.national_number ? -1 : 0))
 
-  const grass = typePokemons.filter(poke => poke[0] || poke[1] === 'Grass')
-  const poison = typePokemons.filter(poke => poke[0] || poke[1] === 'Poison')
-  const fire = typePokemons.filter(poke => poke[0] || poke[1] === 'fire')
+    setPokemons(newList);
+    setOrder('Menor número primeiro')
+  }
+
+  function handleOrderNumberDecClick() {
+    let newList = [...pokemons];
+
+    newList.sort((a, b) => (a.national_number > b.national_number ? -1 : b.national_number > a.national_number ? 1 : 0))
+
+    setPokemons(newList);
+    setOrder('Maior número primeiro')
+  }
+
+  function handleOrderCresClick() {
+    let newList = [...pokemons];
+
+    newList.sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0))
+
+    setPokemons(newList);
+    setOrder('A-Z')
+  }
+
+  function handleOrderDecClick() {
+    let newList = [...pokemons];
+
+    newList.sort((a, b) => (a.name > b.name ? -1 : b.name > a.name ? 1 : 0))
+
+    setPokemons(newList);
+    setOrder('Z-A')
+  }
+
+  const mapType = pokemons?.map(poke => poke.type)
+  const typePosition = mapType?.map(e => e[0] || e[1])
+  const filterTypes = typePosition?.filter((type, i) => typePosition?.indexOf(type) === i);
   
- 
-  
+  function handleFilterType(type) {
+    let newList = [...pokemons];
+
+    // let newListMap = newList.map(poke => poke.type)
+
+    // let filter = newListMap.filter(pokemon => (pokemon[0] || pokemon[1]).includes(type))
+    // let filterNewList = newListMap.filter(pokemon => (pokemon[0] || pokemon[1]) === type)
+    let filterNewList = newList.filter(pokemon => (pokemon.type).includes(type))
+
+    console.log("🚀 ~ file: index.jsx ~ line 103 ~ handleFilterType ~ newList", filterNewList)
+    setPokemons(filterNewList);
+  }
+
 
   return (
     <>
@@ -89,7 +131,8 @@ export function Home() {
             type="text" 
             className="form-control" 
             placeholder='Pesquisar por nome ou número'
-            onChange={(e) => setSearch(e.target.value)}
+            value={searchName}
+            onChange={(e) => setSearchName(e.target.value)}
           />
           <span className="input-group-addon">
             <button className="fa fa-search"></button>
@@ -99,60 +142,53 @@ export function Home() {
           <span>Ordenar por</span>
           <div className="input-group">
             <div className="input-group-prepend">
-              <button className="btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menor número primeiro</button>
+              <button className="btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{order}</button>
               <div className="dropdown-menu">
-                <button type='button' className="dropdown-item">Menor número primeiro</button>
-                <button type='button' className="dropdown-item">Maior número primeiro</button>
-                <button type='button' className="dropdown-item">A-Z</button>
-                <button type='button' className="dropdown-item">Z-A</button>
+                <button onClick={handleOrderNumberCresClick} type='button' className="dropdown-item">Menor número primeiro</button>
+                <button onClick={handleOrderNumberDecClick} type='button' className="dropdown-item">Maior número primeiro</button>
+                <button onClick={handleOrderCresClick} type='button' className="dropdown-item">A-Z</button>
+                <button onClick={handleOrderDecClick} type='button' className="dropdown-item">Z-A</button>
               </div>
             </div>
           </div>
         </div>
-        {/* <div className="orderFilter">
-          <span>Ordenar por</span>
-          <select >
-            <option value="2">Menor número primeiro</option>
-            <option value="1">Maior número primeiro</option>
-            <option value="3">A-Z</option>
-            <option value="8">Z-A</option>
-          </select>
-        </div> */}
       </NavFilterHeader>
 
       <SectionContainer>
         <FilterPokemon>
           <span>Filtrar por Tipo</span>
           <ul>
-            <li><button type='button'>Bug</button></li>
-            <li><button type='button'>Dark</button></li>
-            <li><button type='button'>Dragon</button></li>
-            <li><button type='button'>Eletric</button></li>
-            <li><button type='button'>Fairy</button></li>
-            <li><button type='button'>Fighter</button></li>
+            {filterTypes ? (
+                filterTypes.map(type => (
+                  <li key={type}>
+                    <button type='button' onClick={() => handleFilterType(type)}>{type}</button>
+                  </li>
+                )
+            )) : (
+                <p>Carregando...</p>
+            )}
           </ul>
           <span>Filtrar Favoritos {favorites.length}</span>          
         </FilterPokemon>
         <Pokemons>
           {pokemons ? (
-            pokemons.map(pokemon => (
-              <div className="card" >
+            filterPokemons
+            .map(pokemon => (
+              <div className="card" key={pokemon.national_number}>
                 <div className="cardImage">                     
-                  <img onClick={() => handleRemoveFavorites(pokemon.national_number)} src={pokemon.sprites.normal} alt="Pokémon" />
+                  <img onClick={() => handleRemoveFavorites(pokemon.name)} src={pokemon.sprites.normal} alt="Pokémon" />
                 </div>
                 <div className="informationsPokemon">
                   <span className='numbering'>{pokemon.national_number}</span>
                   <p className='name'>{pokemon.name}</p>
                   <div className="types">
-                    {pokemon.type.map(pokemonType => <span className={`type ${pokemonType}`}>{pokemonType}</span>)}
-                    {/* <span className="type typeGrass">Grass</span>
-                    <span className="type typePoison">Poison</span> */}
+                    {pokemon.type.map((pokemonType, i) => <span className={`type ${pokemonType}`} key={i} >{pokemonType}</span>)}
                   </div>
                 </div>
                 <FontAwesomeIcon 
                   id="heard" 
-                  onClick={() => handleAddFavorites(pokemon.national_number)} 
-                  icon={true ? faHeartSolid : faHeart}
+                  onClick={() => handleAddFavorites(pokemon.name)} 
+                  icon={isFavorite ? faHeartSolid : faHeart}
                 />
               </div>
             ))

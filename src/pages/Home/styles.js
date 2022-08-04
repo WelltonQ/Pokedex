@@ -215,7 +215,7 @@ export const Pokemons = styled.section`
                     background: var(--ghost);
                 }
                 span.Dragon {
-                    color: var(--font);
+                    color: var(--white);
                     background: var(--dragon);
                 }
                 span.Dark {

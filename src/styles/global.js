@@ -52,5 +52,6 @@ export const GlobalStyle = createGlobalStyle`
 
     button {
         cursor: pointer !important;
+        outline: none !important;
     }
 `
