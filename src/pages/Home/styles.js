@@ -72,7 +72,7 @@ export const SectionContainer = styled.section`
     width: 100%;
     max-width: 1200px;
     margin: 0 auto; 
-    padding: 0 1.5rem;
+    padding: 0 1.5rem 1rem;
     gap: 2rem;
     display: flex;
 `;
@@ -85,8 +85,8 @@ export const FilterPokemon = styled.aside`
         /* justify-content: space-around; */
         align-items: center;
         flex-wrap: wrap;
-        gap: 1rem;
-        margin: 1rem 0 2rem;
+        gap: 0.5rem;
+        margin: 1rem 0;
 
         li {
             list-style: none;
@@ -105,6 +105,25 @@ export const FilterPokemon = styled.aside`
                 color: var(--white);
             }
         }
+    }
+
+    div.favorites{
+        display: flex;
+        gap: 5px;
+    }
+
+    button.favorites {
+        border: 1px solid var(--red);
+        padding: 0.2rem 0.8rem;
+        border-radius: 15px;
+        background: var(--red);
+        color: var(--white);
+        font-size: 0.875rem;
+        cursor: pointer;
+    }
+    button.favorites:hover {
+        background: var(--white);
+        color: var(--red);
     }
 `;
 

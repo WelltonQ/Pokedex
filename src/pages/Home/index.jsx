@@ -1,22 +1,17 @@
 import React, { useEffect, useMemo, useState } from 'react'
-// import axios from 'axios'
 
 import { Header } from '../../components/Header'
 import { FilterPokemon, NavFilterHeader, SectionContainer, Pokemons } from './styles'
-// import api from '../../services/api';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { faHeart as faHeartSolid } from "@fortawesome/free-solid-svg-icons";
-
-// import reactImage from '../../assets/react.svg'
 
 export function Home() {
   const [pokemons, setPokemons] = useState(null);
   const [favorites, setFavorites] = useState([]);
   const [searchName, setSearchName] = useState('');
   const [order, setOrder] = useState('Menor número primeiro');
-  const [filterTypesState, setFilterTypesState] = useState([]);
   
   useEffect(() => {
     fetch('https://unpkg.com/pokemons@1.1.0/pokemons.json')
@@ -38,15 +33,13 @@ export function Home() {
     setFavorites([...favorites, filterNewList[0]])
   }
   
-  function handleRemoveFavorites(name) {
+  function handleRemoveFavorites(name) {  // Chamando essa função na imagem por enquanto
     const response = favorites.filter(pokemon => pokemon.name !== name)
     setFavorites(response)
   }
 
-  const isFavorite = favorites.some(pokemon => (pokemon.name) === (pokemons.map(poke => poke.name)))
+  const isFavorite = favorites.some(pokemon => (pokemon.name) === ('Bulbasaur'))
   console.log("🚀 ~ file: index.jsx ~ line 47 ~ Home ~ isFavorite", isFavorite)
-  // console.log("🚀 favorites.some(pokemon => (pokemon.name)", favorites.map(pokemon => (pokemon.name)))
-  // console.log("🚀 ~pokemons.map(poke => poke.name)", pokemons.map(poke => poke.name))
 
   console.log('favorites', favorites)
 
@@ -111,14 +104,17 @@ export function Home() {
   function handleFilterType(type) {
     let newList = [...pokemons];
 
-    // let newListMap = newList.map(poke => poke.type)
-
-    // let filter = newListMap.filter(pokemon => (pokemon[0] || pokemon[1]).includes(type))
-    // let filterNewList = newListMap.filter(pokemon => (pokemon[0] || pokemon[1]) === type)
     let filterNewList = newList.filter(pokemon => (pokemon.type).includes(type))
 
-    console.log("🚀 ~ file: index.jsx ~ line 103 ~ handleFilterType ~ newList", filterNewList)
     setPokemons(filterNewList);
+  }
+
+  function handleFavorites() {     //função temporária
+    setPokemons(favorites);
+  }
+
+  function handlePokemons() {      //função temporária
+    window.location.reload(true)
   }
 
 
@@ -168,8 +164,14 @@ export function Home() {
                 <p>Carregando...</p>
             )}
           </ul>
-          <span>Filtrar Favoritos {favorites.length}</span>          
+          <span>Filtrar Favoritos {favorites.length}</span> 
+          <div className='favorites'>
+            <button onClick={handleFavorites} className='favorites' type="button">Favoritos</button>
+            <button onClick={handlePokemons} className='favorites' type="button">Todos</button>
+          </div>         
         </FilterPokemon>
+
+        {/* Será passado para um COMPONENTE */}        
         <Pokemons>
           {pokemons ? (
             filterPokemons
