@@ -2,10 +2,6 @@ import React from 'react'
 
 import { HeaderContainer } from "./styles";
 
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-// import { faArrowAltCircleRight } from '@fortawesome/free-regular-svg-icons'
-
-
 import pokeball from "../../assets/pokeball.svg";
 import synviaIcon from "../../assets/synvia-A.svg";
 

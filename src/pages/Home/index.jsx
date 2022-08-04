@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { Header } from '../../components/Header'
 import { FilterPokemon, NavFilterHeader, SectionContainer, Pokemons } from './styles'
@@ -33,15 +33,12 @@ export function Home() {
     setFavorites([...favorites, filterNewList[0]])
   }
   
-  function handleRemoveFavorites(name) {  // Chamando essa função na imagem por enquanto
+  function handleRemoveFavorites(name) {  // Chamando essa função na imagem por enquanto para remover o favorito
     const response = favorites.filter(pokemon => pokemon.name !== name)
     setFavorites(response)
   }
 
-  const isFavorite = favorites.some(pokemon => (pokemon.name) === ('Bulbasaur'))
-  console.log("🚀 ~ file: index.jsx ~ line 47 ~ Home ~ isFavorite", isFavorite)
-
-  console.log('favorites', favorites)
+  const isFavorite = false
 
   
   function lower(string) {
@@ -164,7 +161,7 @@ export function Home() {
                 <p>Carregando...</p>
             )}
           </ul>
-          <span>Filtrar Favoritos {favorites.length}</span> 
+          <span>Filtrar Favoritos <font className='favorites'>{favorites.length}</font></span> 
           <div className='favorites'>
             <button onClick={handleFavorites} className='favorites' type="button">Favoritos</button>
             <button onClick={handlePokemons} className='favorites' type="button">Todos</button>

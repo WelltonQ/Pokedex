@@ -49,7 +49,6 @@ export const NavFilterHeader = styled.nav`
         button {
             border: 1px solid red;
             border-radius: 15px !important;
-            /* padding: 0.2rem 1rem; */
             color: red;
             background: var(--white);
             outline: none;
@@ -61,7 +60,6 @@ export const NavFilterHeader = styled.nav`
         .dropdown-menu {
             border: 0px;
             background: transparent;
-            /* transform: translate3d(-100px, 37px, 0px) !important; */
         }
 
     }
@@ -82,7 +80,6 @@ export const FilterPokemon = styled.aside`
 
     ul {
         display: flex;
-        /* justify-content: space-around; */
         align-items: center;
         flex-wrap: wrap;
         gap: 0.5rem;
@@ -107,9 +104,17 @@ export const FilterPokemon = styled.aside`
         }
     }
 
+    font.favorites{
+        background: var(--red);
+        border-radius: 50%;
+        padding: 2px 5px;
+        color: var(--white);
+    }
+
     div.favorites{
         display: flex;
         gap: 5px;
+        margin-top: 5px;
     }
 
     button.favorites {
